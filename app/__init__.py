@@ -1,21 +1,16 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from .config import Config
-
-# Inisialisasi objek db untuk SQLAlchemy
-db = SQLAlchemy()
+from .models import db
+from .routes import main_bp
 
 def create_app():
     app = Flask(__name__)
-
-    # Load konfigurasi dari file config.py
     app.config.from_object(Config)
 
-    # Inisialisasi db
+    # Inisialisasi database
     db.init_app(app)
 
-    # Register blueprint (routes)
-    from .routes import main
-    app.register_blueprint(main)
+    # Register blueprint untuk routes
+    app.register_blueprint(main_bp)
 
     return app
