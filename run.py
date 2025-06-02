@@ -1,12 +1,18 @@
-from app import create_app, db
-from app.models import User, Post
+from flask import Flask, jsonify
 
-app = create_app()
+app = Flask(__name__)
 
-# Inisialisasi database
-@app.before_first_request
-def create_tables():
-    db.create_all()
+@app.route('/')
+def home():
+    return "Hello, Flask! Welcome to your first API."
+
+@app.route('/api', methods=['GET'])
+def api():
+    data = {
+        "message": "Welcome to your Flask API!",
+        "status": "success"
+    }
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True)
